@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Premium Payroll & Payslip Calculator | I-Bacus-Tech</title>
+    
+    <!-- SEO Best Practices -->
+    <meta name="description" content="Calculate employees pro-rata gross and net salaries and generate customized, print-ready PDF payslips instantly for I-Bacus-Tech Solutions." />
+    <meta name="keywords" content="payroll calculator, payslip generator, pro-rata salary, basic pay, HRA, India payroll, PDF payslip" />
+    <meta name="author" content="I-Bacus-Tech Solutions" />
+    
+    <!-- External Stylesheets and Libraries -->
+    <link rel="stylesheet" href="css/styles.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+    
+    <!-- Application Scripts as ES Modules -->
+    <script type="module" src="js/app.js" defer></script>
+</head>
+
+<body>
+    <main class="card">
+        <header>
+            <h1 id="title-main">Payroll Calculator</h1>
+            <div class="sub" id="company-subtitle">I-BACUS-TECH SOLUTIONS PRIVATE LIMITED</div>
+        </header>
+
+        <form id="payroll-form" onsubmit="return false;">
+            <section class="section-label" id="section-employee">Employee Details</section>
+            
+            <div class="row2">
+                <div class="field">
+                    <label for="name">Employee Name</label>
+                    <input type="text" id="name" placeholder="e.g. Ravi Kumar" required />
+                </div>
+                <div class="field">
+                    <label for="empid">Employee ID</label>
+                    <input type="text" id="empid" placeholder="e.g. IBT-2024-01" required />
+                </div>
+            </div>
+            
+            <div class="row2">
+                <div class="field">
+                    <label for="role">Designation</label>
+                    <input type="text" id="role" placeholder="e.g. Full Stack Intern" required />
+                </div>
+                <div class="field">
+                    <label for="dept">Department</label>
+                    <input type="text" id="dept" placeholder="e.g. Development" required />
+                </div>
+            </div>
+            
+            <div class="row2">
+                <div class="field">
+                    <label for="doj">Date of Joining</label>
+                    <input type="date" id="doj" required />
+                </div>
+                <div class="field">
+                    <label for="month">Pay Month</label>
+                    <input type="month" id="month" required />
+                </div>
+            </div>
+            
+            <div class="row2">
+                <div class="field">
+                    <label for="worked">Days Worked</label>
+                    <input type="number" id="worked" placeholder="26" min="0" max="31" required />
+                </div>
+                <div class="field">
+                    <label for="total">Total Working Days</label>
+                    <input type="number" id="total" placeholder="26" min="1" max="31" required />
+                </div>
+            </div>
+
+            <hr />
+            
+            <section class="section-label" id="section-salary">Salary Components</section>
+            
+            <div class="row2">
+                <div class="field">
+                    <label for="basic">Basic Pay (₹)</label>
+                    <input type="number" id="basic" placeholder="0" min="0" step="100" required />
+                </div>
+                <div class="field">
+                    <label for="hra">HRA (₹)</label>
+                    <input type="number" id="hra" placeholder="0" min="0" step="100" required />
+                </div>
+            </div>
+            
+            <div class="field">
+                <label for="travel">Travel Allowance (₹)</label>
+                <input type="number" id="travel" placeholder="0" min="0" step="100" required />
+            </div>
+        </form>
+
+        <section class="result-box" aria-label="Calculation Results">
+            <div class="result-row">
+                <span class="lbl">Basic Pay (Pro-rata)</span>
+                <span class="val" id="r-basic">₹0</span>
+            </div>
+            <div class="result-row">
+                <span class="lbl">HRA (Pro-rata)</span>
+                <span class="val" id="r-hra">₹0</span>
+            </div>
+            <div class="result-row">
+                <span class="lbl">Travel Allowance (Pro-rata)</span>
+                <span class="val" id="r-travel">₹0</span>
+            </div>
+            <div class="result-row">
+                <span class="lbl">Gross Salary</span>
+                <span class="val" id="r-gross">₹0</span>
+            </div>
+            <div class="result-row total">
+                <span class="lbl">Net Payable (Pro-rata)</span>
+                <span class="val" id="r-net">₹0</span>
+            </div>
+        </section>
+
+        <!-- Dynamic pro-rata component visualization -->
+        <section class="bar-wrap" aria-label="Salary Distribution Visualization">
+            <div class="bar-track" id="distribution-bar-track">
+                <div class="bar-seg" id="bar-b" style="background: #10b981; width: 0%;" title="Basic Pay"></div>
+                <div class="bar-seg" id="bar-h" style="background: #3b82f6; width: 0%;" title="HRA"></div>
+                <div class="bar-seg" id="bar-t" style="background: #ef4444; width: 0%;" title="Travel Allowance"></div>
+            </div>
+            <div class="legend" id="bar-legend">
+                <span><span class="dot" style="background: #10b981; color: #10b981;"></span>Basic Pay</span>
+                <span><span class="dot" style="background: #3b82f6; color: #3b82f6;"></span>HRA</span>
+                <span><span class="dot" style="background: #ef4444; color: #ef4444;"></span>Travel Allowance</span>
+            </div>
+        </section>
+
+        <footer class="btn-row">
+            <button type="button" class="btn-reset" id="btn-action-reset" aria-label="Reset payroll calculator form">Reset</button>
+            <button type="button" class="btn-pdf" id="btn-action-pdf" aria-label="Download Salary Payslip as PDF">⬇ Download Payslip PDF</button>
+        </footer>
+        
+        <div class="msg" id="msg" role="status" aria-live="polite">✔ Payslip downloaded successfully!</div>
+    </main>
+</body>
+
+</html>
